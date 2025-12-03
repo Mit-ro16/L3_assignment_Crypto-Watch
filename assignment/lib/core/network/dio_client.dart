@@ -1,23 +1,38 @@
+import 'package:assignment/core/contants/api_constant.dart';
 import 'package:dio/dio.dart';
 
 class DioClient {
   final Dio dio;
 
-  DioClient(String apiKey)
+  DioClient({required String apiKey})
       : dio = Dio(
           BaseOptions(
-            baseUrl: "https://pro-api.coingecko.com/api/v3",
-            connectTimeout: const Duration(seconds: 10),
+            baseUrl: ApiConstants.baseUrl,
+            connectTimeout: const Duration(seconds: 15),
             receiveTimeout: const Duration(seconds: 15),
+            headers: {
+              "Accept": "application/json",
+              "x-cg-pro-api-key": apiKey,
+            },
           ),
         ) {
     dio.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: (options, handler) {
-          options.headers["x-cg-pro-api-key"] = apiKey;
-          return handler.next(options);
-        },
+      LogInterceptor(
+        requestBody: true,
+        responseBody: true,
       ),
     );
+  }
+
+  Future<Response> get(
+    String endpoint, {
+    Map<String, dynamic>? query,
+  }) async {
+    try {
+      return await dio.get(endpoint, queryParameters: query);
+    } on DioException catch (e) {
+      print("❌ API Error: ${e.response?.data}");
+      rethrow;
+    }
   }
 }

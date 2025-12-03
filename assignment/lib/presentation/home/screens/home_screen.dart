@@ -15,9 +15,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
   final screens = const [
-    CryptoListScreen(),     // Discover
-    FavouritesScreen(),     // Favourites
-    //ProfileScreen(),        // Profile / Settings
+    CryptoListScreen(),     
+    FavouritesScreen(),     
+    //ProfileScreen(),        
   ];
 
   @override
