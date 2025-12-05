@@ -6,6 +6,7 @@ import 'package:assignment/presentation/auth/bloc/signin_bloc/signin_state.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive/hive.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -25,6 +26,7 @@ class _SignInScreenState extends State<SignInScreen> {
       body: BlocConsumer<SigninBloc, SigninState>(
         listener: (context, state) {
           if (state is SigninSuccess) {
+            Hive.box('usersBox').put('logged_in_email', state.message);
             context.go('/home');
           } else if (state is SigninFailure) {
             ScaffoldMessenger.of(
@@ -112,7 +114,6 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                     const SizedBox(height: 12),
 
-                   
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

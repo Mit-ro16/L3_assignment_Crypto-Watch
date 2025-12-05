@@ -5,33 +5,22 @@ class DioClient {
   final Dio dio;
 
   DioClient({required String apiKey})
-      : dio = Dio(
-          BaseOptions(
-            baseUrl: ApiConstants.baseUrl,
-            connectTimeout: const Duration(seconds: 15),
-            receiveTimeout: const Duration(seconds: 15),
-            headers: {
-              "Accept": "application/json",
-              "x-cg-pro-api-key": apiKey,
-            },
-          ),
-        ) {
-    dio.interceptors.add(
-      LogInterceptor(
-        requestBody: true,
-        responseBody: true,
-      ),
-    );
+    : dio = Dio(
+        BaseOptions(
+          baseUrl: ApiConstants.baseUrl,
+          connectTimeout: const Duration(seconds: 15),
+          receiveTimeout: const Duration(seconds: 15),
+          headers: {"Accept": "application/json"},
+        ),
+      ) {
+    dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
   }
 
-  Future<Response> get(
-    String endpoint, {
-    Map<String, dynamic>? query,
-  }) async {
+  Future<Response> get(String endpoint, {Map<String, dynamic>? query}) async {
     try {
       return await dio.get(endpoint, queryParameters: query);
     } on DioException catch (e) {
-      print("❌ API Error: ${e.response?.data}");
+      
       rethrow;
     }
   }

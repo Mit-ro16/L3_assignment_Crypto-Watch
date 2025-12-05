@@ -1,6 +1,7 @@
 import 'package:assignment/core/network/dio_client.dart';
 import 'package:assignment/data/datasources/local/auth_datasource.dart';
 import 'package:assignment/data/datasources/local/theme_datasource.dart';
+import 'package:assignment/data/datasources/remote/crypto_remote_datasource.dart';
 
 import 'package:assignment/data/repository_impl/auth_repo_impl.dart';
 import 'package:assignment/data/repository_impl/crypto_repository_impl.dart';
@@ -44,39 +45,25 @@ Future<void> initDependencies() async {
     () => CryptoRemoteDataSourceImpl(di<DioClient>()),
   );
 
-  // di.registerLazySingleton<CryptoRepository>(
-  //   () => CryptoRepositoryImpl(di<CryptoRemoteDataSourceImpl>()),
-  // );
+  di.registerLazySingleton<CryptoRepository>(
+    () => CryptoRepositoryImpl(di<CryptoRemoteDataSourceImpl>()),
+  );
 
-  di.registerLazySingleton<GetMarketListUsecase>(
-    () => GetMarketListUsecase(di<CryptoRepository>()),
+  di.registerLazySingleton<GetMarketListUseCase>(
+    () => GetMarketListUseCase(di<CryptoRepository>()),
   );
 
   di.registerFactory<DiscoverBloc>(
-    () => DiscoverBloc(di<GetMarketListUsecase>()),
+    () => DiscoverBloc(di<GetMarketListUseCase>()),
   );
 
-  
-di.registerLazySingleton<Box>(() => Hive.box('settingsBox'));
+  di.registerLazySingleton<ThemeDataSource>(() => ThemeDataSource(di<Box>()));
 
+  di.registerLazySingleton<ThemeRepository>(
+    () => ThemeRepositoryImpl(di<ThemeDataSource>()),
+  );
 
-di.registerLazySingleton<ThemeDataSource>(
-  () => ThemeDataSource(di<Box>()),
-);
+  di.registerLazySingleton(() => ThemeUsecase(di<ThemeRepository>()));
 
-
-di.registerLazySingleton<ThemeRepository>(
-  () => ThemeRepositoryImpl(di<ThemeDataSource>()),
-);
-
-
-di.registerLazySingleton(
-  () => ThemeUsecase(di<ThemeRepository>()),
-);
-
-
-di.registerFactory(
-  () => ThemeBloc(di<ThemeUsecase>()),
-);
-
+  di.registerFactory(() => ThemeBloc(di<ThemeUsecase>()));
 }

@@ -1,6 +1,7 @@
-import 'package:assignment/presentation/favourite/cryptolist_screen.dart';
-import 'package:assignment/presentation/favourite/cryptolist_screen.dart';
+import 'package:assignment/presentation/discover/screen/discover_screen.dart';
+
 import 'package:assignment/presentation/home/screens/favourites_screen.dart';
+import 'package:assignment/presentation/profile/screens/profile_screen.dart';
 
 import 'package:flutter/material.dart';
 
@@ -14,11 +15,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
-  final screens = const [
-    CryptoListScreen(),     
-    FavouritesScreen(),     
-    //ProfileScreen(),        
-  ];
+  final screens = [DiscoverScreen(), FavouritesScreen(), ProfileScreen()];
 
   @override
   Widget build(BuildContext context) {

@@ -20,7 +20,7 @@ class ProfileScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // PROFILE INFO
+            
             ListTile(
               leading: const CircleAvatar(child: Icon(Icons.person)),
               title: Text(email),
@@ -28,7 +28,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             const Divider(),
 
-            // THEME TOGGLE
+            
             BlocBuilder<ThemeBloc, ThemeState>(
               builder: (context, state) {
                 return SwitchListTile(
@@ -43,7 +43,7 @@ class ProfileScreen extends StatelessWidget {
 
             const Divider(),
 
-            // LOGOUT BUTTON
+            
             ElevatedButton.icon(
               onPressed: () async {
                 userBox.delete('loggedInEmail');
