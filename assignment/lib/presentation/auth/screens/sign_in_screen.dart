@@ -53,7 +53,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     ),
                     const SizedBox(height: 30),
-
                     TextFormField(
                       controller: emailController,
                       decoration: InputDecoration(

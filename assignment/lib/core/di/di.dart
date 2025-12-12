@@ -38,7 +38,7 @@ Future<void> initDependencies() async {
   di.registerFactory<SignupBloc>(() => SignupBloc(di<AuthUsecase>()));
 
   di.registerLazySingleton<DioClient>(
-    () => DioClient(apiKey: "YOUR_REAL_API_KEY_HERE"),
+    () => DioClient(apiKey: ""),
   );
 
   di.registerLazySingleton<CryptoRemoteDataSourceImpl>(
